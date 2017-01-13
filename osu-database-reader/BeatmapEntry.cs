@@ -7,6 +7,7 @@ namespace osu_database_reader
 {
     public class BeatmapEntry
     {
+        public int EntryLength;
         public string Artist, ArtistUnicode;
         public string Title, TitleUnicode;
         public string Creator;  //mapper
@@ -42,13 +43,8 @@ namespace osu_database_reader
         public int Unknown2;
         public byte ManiaScrollSpeed;
 
-        public static BeatmapEntry ReadFromReader(CustomReader r, bool readLength = true, int version = 20160729) {
+        public static BeatmapEntry ReadFromReader(CustomReader r, int version = 20160729) {
             BeatmapEntry e = new BeatmapEntry();
-
-            int length = 0;
-            if (readLength) length = r.ReadInt32();
-            int startPosition = (int) r.BaseStream.Position;
-
             e.Artist = r.ReadString();
             e.ArtistUnicode = r.ReadString();
             e.Title = r.ReadString();
@@ -58,8 +54,8 @@ namespace osu_database_reader
             e.AudioFileName = r.ReadString();
             e.BeatmapChecksum = r.ReadString(); //always 32 in length, so the 2 preceding bytes in the file are practically wasting space
             e.BeatmapFileName = r.ReadString();
-
-            //Debug.WriteLine($"{e.Artist} - {e.Title} [{e.Difficulty}]");
+            
+            Debug.WriteLine($"{e.Artist} - {e.Title} [{e.Difficulty}]");
 
             e.RankedStatus = (SubmissionStatus)r.ReadByte();
             e.CountHitCircles = r.ReadUInt16();
@@ -113,8 +109,10 @@ namespace osu_database_reader
 
             //Debug.WriteLine("gamemode: " + e.GameMode);
 
+            
             e.SongSource = r.ReadString();
             e.SongTags = r.ReadString();
+           
             e.OffsetOnline = r.ReadInt16();
             e.TitleFont = r.ReadString();
             e.Unplayed = r.ReadBoolean();
@@ -125,6 +123,8 @@ namespace osu_database_reader
             e.IsOsz2 = r.ReadBoolean();
             e.FolderName = r.ReadString();
             e.LastCheckAgainstOsuRepo = r.ReadDateTime();
+
+           
 
             //Debug.WriteLine("Last osu! repo check: " + e.LastCheckAgainstOsuRepo);
 
@@ -138,10 +138,9 @@ namespace osu_database_reader
             e.Unknown2 = r.ReadInt32();
             e.ManiaScrollSpeed = r.ReadByte();
 
-            //Debug.WriteLine("Mania scroll speed: " + e.ManiaScrollSpeed);
+            
 
-            int endPosition = (int) r.BaseStream.Position;
-            Debug.Assert(!readLength || length == endPosition - startPosition); //TODO: could throw error here
+            //Debug.WriteLine("Mania scroll speed: " + e.ManiaScrollSpeed);
             //Debug.WriteLine("---");
 
             return e;

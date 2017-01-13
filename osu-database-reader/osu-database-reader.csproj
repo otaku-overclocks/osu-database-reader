@@ -43,6 +43,7 @@
     <Compile Include="BeatmapEntry.cs" />
     <Compile Include="CollectionDb.cs" />
     <Compile Include="CustomReader.cs" />
+    <Compile Include="CustomWriter.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="OsuDb.cs" />
     <Compile Include="Player.cs" />

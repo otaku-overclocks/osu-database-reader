@@ -14,7 +14,7 @@ namespace UnitTestProject
         private static readonly string OsuPath;
 
         static UnitTest1() {
-            OsuPath = $@"C:\Users\{Environment.UserName}\AppData\Local\osu!\";
+            OsuPath = $@"G:\Games\OsuTest\";
         }
 
         [TestMethod]
@@ -33,6 +33,18 @@ namespace UnitTestProject
         [TestMethod]
         public void ReadCollectionDb() {
             CollectionDb db = CollectionDb.Read(OsuPath + "collection.db");
+            Debug.WriteLine("Version: " + db.OsuVersion);
+            Debug.WriteLine("Amount of collections: " + db.AmountOfCollections);
+            foreach (var c in db.Collections)
+                Debug.WriteLine($" - Collection {c.Name} with {c.Md5Hashes.Count} item" + (c.Md5Hashes.Count == 1 ? "" : "s"));
+        }
+
+        [TestMethod]
+        public void CopyCollectionDb()
+        {
+            CollectionDb db = CollectionDb.Read(OsuPath + "collection.db");
+            CollectionDb.Write(OsuPath + "collection-copy.db", db);
+            db = CollectionDb.Read(OsuPath + "collection-copy.db");
             Debug.WriteLine("Version: " + db.OsuVersion);
             Debug.WriteLine("Amount of collections: " + db.AmountOfCollections);
             foreach (var c in db.Collections)

@@ -32,5 +32,23 @@ namespace osu_database_reader
 
             return db;
         }
+
+        public static void Write(string path, CollectionDb db)
+        {
+            using (CustomWriter w = new CustomWriter(File.Open(path, FileMode.Create)))
+            {
+                w.Write(db.OsuVersion);
+                w.Write(db.AmountOfCollections);
+                foreach (var collection in db.Collections)
+                {
+                    w.Write(collection.Name);
+                    w.Write(collection.Md5Hashes.Count);
+                    foreach (var md5Hash in collection.Md5Hashes)
+                    {
+                        w.Write(md5Hash);
+                    }
+                }
+            }
+        }
     }
 }
