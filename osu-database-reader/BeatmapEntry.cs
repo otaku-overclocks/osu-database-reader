@@ -55,7 +55,7 @@ namespace osu_database_reader
             e.BeatmapChecksum = r.ReadString(); //always 32 in length, so the 2 preceding bytes in the file are practically wasting space
             e.BeatmapFileName = r.ReadString();
             
-            Debug.WriteLine($"{e.Artist} - {e.Title} [{e.Difficulty}]");
+            //Debug.WriteLine($"{e.Artist} - {e.Title} [{e.Difficulty}]");
 
             e.RankedStatus = (SubmissionStatus)r.ReadByte();
             e.CountHitCircles = r.ReadUInt16();
