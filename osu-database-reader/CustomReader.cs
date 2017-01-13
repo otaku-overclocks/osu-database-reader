@@ -44,7 +44,6 @@ namespace osu_database_reader
             }
             else if (b == 0x00)
             {
-                Debug.WriteLine("Empty byte string");
                 return string.Empty;
             }
             else
@@ -56,9 +55,7 @@ namespace osu_database_reader
         public DateTime ReadDateTime()
         {
             long idk = ReadInt64();
-            Debug.WriteLine("DT"+idk);
             DateTime ret = new DateTime(idk, DateTimeKind.Utc);
-            Debug.WriteLine("RET" + ret);
             return ret;
         }
 

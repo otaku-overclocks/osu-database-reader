@@ -36,7 +36,14 @@ namespace UnitTestProject
             Debug.WriteLine("Version: " + db.OsuVersion);
             Debug.WriteLine("Amount of collections: " + db.AmountOfCollections);
             foreach (var c in db.Collections)
-                Debug.WriteLine($" - Collection {c.Name} with {c.Md5Hashes.Count} item" + (c.Md5Hashes.Count == 1 ? "" : "s"));
+            {
+                Debug.WriteLine($" - Collection {c.Name} with {c.Md5Hashes.Count} item" +
+                                (c.Md5Hashes.Count == 1 ? "" : "s"));
+                foreach (var cMd5Hash in c.Md5Hashes)
+                {
+                    Debug.WriteLine(cMd5Hash);
+                }
+            }
         }
 
         [TestMethod]
